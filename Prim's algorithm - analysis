@@ -15,6 +15,6 @@
  
  This way, you can create a minimum spanning tree. 
  So, why does it fail in a directed graph?
-1) In our given example, node D does not have a node directed from it. So there is no adjacent node. So it fails in step 4. 
+1) In our given example, no node is reachable from node D. As Prim's assumes every node is reachable, it fails.
 2) As for negative weights (E-D is -5), that is not a problem because it is only the differences between edge weights that matter for the MST. 
 If that seems to be a problem, a huge positive constant could be added to the weights and the MST algorithm will still work.
