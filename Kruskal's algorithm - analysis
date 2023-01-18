@@ -1,0 +1,26 @@
+How does Kruskal's work?
+1) First, all weights of edges are arranged in ascending order.
+2) We choose the smallest edge and then try to add it to our spanning tree and if it forms a cycle, we discard it.
+3) Repeat this until (v-1) edges are added to the minimum spanning tree.
+
+Why does it fail for directed graph?
+1) Using union-find method to detect cycles in a graph, the method fails for a directed graph.
+ 
+ a -> b
+ |    |   
+ > c  >
+ 
+ this is not a cycle but according to union-find method, this will be considered a cycle.
+ 
+ a - parent - nothing
+ b - parent - nothing 
+ so b - parent - a
+ c - parent - nothing
+ so c - parent - b
+ hence, abc will be considered a cycle.
+ but this is not true.
+ 
+ 2) Negative weights will not be a problem as only the differences between edge weights matter for the MST.
+ 
+ 
+ 
