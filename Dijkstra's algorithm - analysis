@@ -1,0 +1,11 @@
+Dikjstra's algorithm is used to find the shortest path among two nodes - source node and any other node. 
+The shortest path between two nodes, A and B, is the path that has the minimum cost among all possible paths between A and B.
+It works for directed graphs as well as undirected graphs.
+In my code I excluded the edge with negative weights as it doesnot work for the same. Why>
+1) A ->(-1) B
+   |     |(-1)
+   >(-1)C
+If we pop each node in a priority queue and add costs, we'll get a smaller cost each time. First -2, then -3 and so on. So we will be stuck in an infinite cycle.
+Dijkstra’s algorithm never ends if the graph contains at least one negative cycle. By a negative cycle, we mean a cycle that has a negative total weight for its edges.
+2) Dijkstra’s algorithm can reach an end if the graph contains negative edges, but no negative cycles; however, it might give wrong results.
+
