@@ -1,0 +1,144 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Algorithm{
+public:
+    //adjacency list
+    vector<pair<int, int> > pairs;
+    int vertex;
+    Algorithm(int vertex)
+    {
+        this->vertex = vertex;
+    }
+    void add_child(int vnum, int len)
+    {
+        pair<int, int> p;
+        p.first = vnum;
+        p.second = len;
+        pairs.push_back(p);
+    }
+    
+};
+
+vector<int> distances(vector<Algorithm*> graph,int s, vector<int>& path)
+{
+    vector<int> dist(graph.size());
+    bool visited[graph.size()];
+    for (int i = 0; i < graph.size(); i++) {
+        visited[i] = false;
+        path[i] = -1;
+        dist[i] = INT_MAX;
+    }
+    dist[s] = 0;
+    path[s] = -1;
+    int current = s;
+    unordered_set<int> set;
+    while (true) {
+        visited[current] = true;
+        for (int i = 0;i < graph[current]->pairs.size();i++) {
+            int v = graph[current]->pairs[i].first;
+            if (visited[v])
+                continue;
+            set.insert(v);
+            int alt= dist[current]+ graph[current]->pairs[i].second;
+            if (alt < dist[v]) {
+                dist[v] = alt;
+                path[v] = current;
+            }
+        }
+        set.erase(current);
+        if (set.empty())
+            break;
+        int minDist = INT_MAX;
+        int index = 0;
+        for (int j: set) {
+            if (dist[j] < minDist) {
+                minDist = dist[j];
+                index = j;
+            }
+        }
+        current = index;
+    }
+    return dist;
+}
+
+void printPath(vector<int> path,
+               int i, int s)
+{
+    if (i != s) {
+        if (path[i] == -1) {
+            cout << "Path not found!!";
+            return;
+        }
+        printPath(path, path[i], s);
+        cout << path[i] << " ";
+    }
+}
+ 
+char eq(int n)
+{
+    switch(n)
+    {
+        case 0:
+        return 'A';
+        break;
+        case 1:
+        return 'B';
+        break;
+        case 3:
+        return 'C';
+        break;
+        case 4:
+        return 'E';
+        break;
+        case 2:
+        return 'D';
+        break;
+    }
+}
+int main()
+{
+    vector<Algorithm*> v;
+    int n = 5, s = 0, e = 8;
+    for (int i = 0; i < n; i++) {
+        Algorithm* a = new Algorithm(i);
+        v.push_back(a);
+    }
+ 
+   
+    v[0]->add_child(1, 4);
+    v[0]->add_child(3,2);
+    v[1]->add_child(2, 2);
+    v[1]->add_child(3, 3);
+    v[1]->add_child(4, 3);
+    v[3]->add_child(4, 4);
+    v[3]->add_child(1,1);
+    v[3]->add_child(4,4);
+    
+    
+    vector<int> path(v.size());
+    vector<int> dist
+        = distances(v, s, path);
+ 
+ 
+    for (int i = 0; i < dist.size(); i++) {
+        if (dist[i] == INT_MAX) {
+            cout << i << " and " << s
+                 << " are not connected"
+                 << endl;
+            continue;
+        }
+        cout << "Distance of " << eq(i)
+             << " vertex from source vertex "
+             << "A" << " is: "
+             << dist[i] << endl;
+    }
+    return 0;
+}
+
+OUTPUT:
+Distance of A vertex from source vertex A is: 0
+Distance of B vertex from source vertex A is: 3
+Distance of D vertex from source vertex A is: 5
+Distance of C vertex from source vertex A is: 2
+Distance of E vertex from source vertex A is: 6
