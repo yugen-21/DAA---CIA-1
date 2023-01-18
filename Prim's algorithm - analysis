@@ -1,0 +1,20 @@
+ How does it work?
+ Assuming that all nodes are connected, we try to find a minimum spanning tree. For this, all nodes MUST have adjacent nodes i.e, 
+ they must all be accessible from any given node.
+ 1) So first we maintain an array - visited[n] (n - no. of nodes).
+ [a,b,c,d,e]
+ [T,F,F,F,F]
+ 2) If a is the first node, then another array weights:
+ [a,b,c,d,e]
+ [0,inf,inf,inf,inf,inf] (inf - infinity)
+ 3) select an unvisited node : say, b
+ visited[1] = T;
+ 4)if(weights[1] > weight between b and any adjacent element
+ {
+ weights[1] = weight between b and that adjacent element.
+ 
+ This way, you can create a minimum spanning tree. 
+ So, why does it fail in a directed graph?
+1) In our given example, node D does not have a node directed from it. So there is no adjacent node. So it fails in step 4. 
+2) As for negative weights (E-D is -5), that is not a problem because it is only the differences between edge weights that matter for the MST. 
+If that seems to be a problem, a huge positive constant could be added to the weights and the MST algorithm will still work.
